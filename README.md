@@ -7,7 +7,7 @@ This project is composed of two maven modules.  The module accumulo-maven-plugin
 
 To try accumulo-mojo out, execute the following maven commands :
 
-  ???? (I am not a maven expert, I suspected mvn install, but that failed)
+ * ???? (I am not a maven expert, I suspected mvn install, but that failed)
 
 Usage
 =============
