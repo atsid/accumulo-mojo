@@ -6,7 +6,7 @@ Maven Mojo for Accumulo.  Useful for integration testing.
 Usage
 =============
 
-Add dependency plugin:
+### Add dependency plugin
 
   		<plugin>
 				<groupId>com.atsid.mojo</groupId>
@@ -22,10 +22,11 @@ Add dependency plugin:
 				</executions>
 			</plugin>
       
-Use in IT:
+### Use in IT
 
-  @Test
-  public void testCustomIterator() throws TableExistsException, TableNotFoundException, IOException, AccumuloException, AccumuloSecurityException {
+  
+    @Test
+    public void testCustomIterator() throws TableExistsException, TableNotFoundException, IOException, AccumuloException, AccumuloSecurityException {
     String tableName = "testTable";
     
     ZooKeeperInstance instance = new ZooKeeperInstance("accumulo", "localhost:2181");
