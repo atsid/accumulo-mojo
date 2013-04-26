@@ -17,6 +17,12 @@
 		<hadoop.version>0.20.2-cdh3u2</hadoop.version>
 	</properties>
 
+	 <scm>
+		<connection>scm:git:https://github.com/pheer/accumulo-mojo.git</connection>
+		<url>scm:git:https://github.com/pheer/accumulo-mojo.git</url>
+		<developerConnection>scm:git:https://github.com/pheer/accumulo-mojo.git</developerConnection>
+	 </scm>
+
 	<build>
 		<extensions>
 			<extension>
