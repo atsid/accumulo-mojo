@@ -7,7 +7,22 @@ This project is composed of two maven modules.  The module accumulo-maven-plugin
 
 To try accumulo-mojo out, execute the following maven commands :
 
- * ???? (I am not a maven expert, I suspected mvn install, but that failed)
+ * Run 'mvn clean install'  If integration tests pass assertions, it should output the following:
+ 
+	[INFO] ------------------------------------------------------------------------
+	[INFO] Reactor Summary:
+	[INFO] 
+	[INFO] Accumulo Mojo Parent .............................. SUCCESS [0.509s]
+	[INFO] Maven Accumulo Plugin ............................. SUCCESS [3.693s]
+	[INFO] Accumulo Plugin Integration Tests ................. SUCCESS [25.665s]
+	[INFO] ------------------------------------------------------------------------
+	[INFO] BUILD SUCCESS
+	[INFO] ------------------------------------------------------------------------
+	[INFO] Total time: 30.369s
+	[INFO] Finished at: Fri Apr 26 17:09:17 PDT 2013
+	[INFO] Final Memory: 32M/639M
+	[INFO] ------------------------------------------------------------------------
+
 
 Usage
 =============
