@@ -9,6 +9,7 @@ To try accumulo-mojo out, execute the following maven commands :
 
  * Run 'mvn clean install'  If integration tests pass assertions, it should output the following:
  
+<pre>
 	[INFO] ------------------------------------------------------------------------
 	[INFO] Reactor Summary:
 	[INFO] 
@@ -22,7 +23,7 @@ To try accumulo-mojo out, execute the following maven commands :
 	[INFO] Finished at: Fri Apr 26 17:09:17 PDT 2013
 	[INFO] Final Memory: 32M/639M
 	[INFO] ------------------------------------------------------------------------
-
+</pre>
 
 Usage
 =============
