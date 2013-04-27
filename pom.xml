@@ -18,7 +18,7 @@
   </scm>
   <properties>
     <accumulo.version>1.4.3</accumulo.version>
-    <hadoop.version>1.0.4</hadoop.version>
+    <hadoop.version>0.20.2-cdh3u4</hadoop.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -111,6 +111,23 @@
         <groupId>org.apache.zookeeper</groupId>
         <artifactId>zookeeper</artifactId>
         <version>3.3.6</version>
+	<exclusions>
+	<exclusion>
+		<groupId>com.sun.jmx</groupId>
+		<artifactId>jmxri</artifactId>
+	</exclusion>
+	<exclusion>
+		<groupId>com.sun.jdmk</groupId>
+		<artifactId>jmxtools</artifactId>
+	</exclusion>
+	<exclusion>
+		<groupId>javax.jms</groupId>
+		<artifactId>jms</artifactId>
+	</exclusion>
+	<exclusion>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+	</exclusion>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
@@ -226,4 +243,15 @@
       </extension>
     </extensions>
   </build>
+  <repositories>
+	<repository>
+		<id>cloudera</id>
+		<url>https://repository.cloudera.com/content/repositories/releases</url>
+	</repository>
+	<repository>
+		<id>repository.jboss.org-public</id>
+		<name>JBoss repository</name>
+		<url>https://repository.jboss.org/nexus/content/groups/public</url>
+	</repository>
+  </repositories>
 </project>
