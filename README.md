@@ -7,7 +7,8 @@ This project is composed of two maven modules.  The module accumulo-maven-plugin
 
 To try accumulo-mojo out, execute the following maven commands :
 
- * Run 'mvn clean install'  If integration tests pass assertions, it should output the following:
+ * Run 'mvn clean install'  
+ * If all assertions pass in the integ test, then Output should be the following:
  
 <pre>
 	[INFO] ------------------------------------------------------------------------
