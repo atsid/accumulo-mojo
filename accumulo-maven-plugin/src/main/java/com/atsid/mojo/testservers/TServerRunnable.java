@@ -18,12 +18,14 @@ public class TServerRunnable implements ServerTestRunnerAwareRunnable<AccumuloTa
 	private String hostname;
 	private File baseDirectory;
 	private List<String> classpathEntries;
+    private boolean quiet;
 
-	public TServerRunnable(String hostname, File baseDirectory, List<String> classpathEntries) {
+	public TServerRunnable(String hostname, File baseDirectory, List<String> classpathEntries, boolean quiet) {
 		super();
 		this.hostname = hostname;
 		this.baseDirectory = baseDirectory;
 		this.classpathEntries = classpathEntries;
+        this.quiet = quiet;
 	}
 
 	public AccumuloTabletServerRunner getTestRunner() {
@@ -34,6 +36,7 @@ public class TServerRunnable implements ServerTestRunnerAwareRunnable<AccumuloTa
 
 		try {
 			tabletServer = new AccumuloTabletServerRunner(hostname, baseDirectory, classpathEntries);
+            tabletServer.setQuiet(quiet);
 			tabletServer.startupServer();
 		} catch (Exception e) {
 			throw new RuntimeException("Error running tablet server", e);

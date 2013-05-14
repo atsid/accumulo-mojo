@@ -11,12 +11,14 @@ public class MasterServerRunnable implements ServerTestRunnerAwareRunnable<Accum
 	private String hostname;
 	private File baseDirectory;
 	private List<String> classpath;
+    private boolean quiet;
 
-	public MasterServerRunnable(String hostname, File baseDirectory, List<String> classpath) {
+	public MasterServerRunnable(String hostname, File baseDirectory, List<String> classpath, boolean quiet) {
 		super();
 		this.hostname = hostname;
 		this.baseDirectory = baseDirectory;
 		this.classpath = classpath;
+        this.quiet = quiet;
 	}
 
 	public AccumuloMasterRunner getTestRunner() {
@@ -27,6 +29,7 @@ public class MasterServerRunnable implements ServerTestRunnerAwareRunnable<Accum
 		try {
 
 			masterServer = new AccumuloMasterRunner(hostname, baseDirectory, classpath);
+            masterServer.setQuiet(quiet);
 			masterServer.startupServer();
 		} catch (Exception e) {
 			throw new RuntimeException("Error running master server", e);

@@ -31,6 +31,16 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	private static final String STOPPED = "stopped";
 	private static final String STARTED = "started";
 
+    /**
+     * @parameter expression="${accumulo.quiet}" default-value="false"
+     */
+    private boolean accumuloQuiet;
+
+    /**
+     * @parameter expression="${zookeeper.quiet}" default-value="false"
+     */
+    private boolean zookeeperQuiet;
+
 	/**
 	 * @parameter expression="${accumulo.instanceName}"
 	 *            default-value="accumulo"
@@ -119,7 +129,7 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 
 	protected void startZookeeper() throws Exception {
 		zookeeperRunnable = new ZookeeperRunnable(resolveClasspath(),
-				zookeeperPort);
+				zookeeperPort, zookeeperQuiet);
 		Thread zookeeperThread = new Thread(zookeeperRunnable);
 		zookeeperThread.setName("zookeeper " + System.currentTimeMillis());
 		zookeeperThread.setDaemon(true);
@@ -137,7 +147,7 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	protected void startTServer(String hostname, final File baseDirectory)
 			throws Exception {
 		tabletServerRunnable = new TServerRunnable(hostname, baseDirectory,
-				resolveClasspath());
+				resolveClasspath(), accumuloQuiet);
 		Thread tabletServerThread = new Thread(tabletServerRunnable);
 		getLog().info("Starting tablet server");
 		tabletServerThread.setDaemon(true);
@@ -149,7 +159,7 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	protected void startMasterServer(String hostname, final File baseDirectory)
 			throws Exception {
 		masterServerRunnable = new MasterServerRunnable(hostname,
-				baseDirectory, resolveClasspath());
+				baseDirectory, resolveClasspath(), accumuloQuiet);
 		Thread masterThread = new Thread(masterServerRunnable);
 		masterThread.setDaemon(true);
 		masterThread.setName("Master Server " + System.currentTimeMillis());
@@ -159,7 +169,7 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	protected void startLogger(final File baseDirectory) throws Exception {
 
 		loggerServerRunnable = new LoggerServerRunnable(baseDirectory,
-				resolveClasspath());
+				resolveClasspath(), accumuloQuiet);
 		Thread logThread = new Thread(loggerServerRunnable);
 		logThread.setDaemon(true);
 		logThread.setName("Logger " + System.currentTimeMillis());
@@ -167,7 +177,7 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	}
 
 	protected void startGC(final File baseDirectory) throws Exception {
-		gcServerRunner = new GCServerRunnable(baseDirectory, resolveClasspath());
+		gcServerRunner = new GCServerRunnable(baseDirectory, resolveClasspath(), accumuloQuiet);
 		Thread gcThread = new Thread(gcServerRunner);
 		gcThread.setDaemon(true);
 		gcThread.setName("GC Server " + System.currentTimeMillis());

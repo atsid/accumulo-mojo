@@ -30,10 +30,11 @@ public abstract class AbstractServerTestRunner implements ServerTestRunnerMXBean
 		this.process = initServer();
 
 		if (quiet) {
-			logger.info("Test runner has been set to 'quiet', suppressing console output");
+			logger.info("Test runner 'quiet' mode has been enabled, suppressing console output");
 			redirectInputStream(process.getErrorStream(), null);
 			redirectInputStream(process.getInputStream(), null);
 		} else {
+            logger.info("Test runner 'quiet' mode is disabled");
 			redirectInputStream(process.getErrorStream(), System.err);
 			redirectInputStream(process.getInputStream(), System.out);
 		}

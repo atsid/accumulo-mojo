@@ -12,10 +12,13 @@ public class ZookeeperRunnable implements ServerTestRunnerAwareRunnable<Zookeepe
 
 	private int zookeeperPort;
 
-	public ZookeeperRunnable(List<String> classpath, int zookeeperPort) {
+    private boolean quiet;
+
+	public ZookeeperRunnable(List<String> classpath, int zookeeperPort, boolean quiet) {
 		super();
 		this.classpath = classpath;
 		this.zookeeperPort = zookeeperPort;
+        this.quiet = quiet;
 	}
 
 	public ZookeeperTestRunner getTestRunner() {
@@ -24,6 +27,7 @@ public class ZookeeperRunnable implements ServerTestRunnerAwareRunnable<Zookeepe
 
 	public void run() {
 		zookeeperTestRunner = new ZookeeperTestRunner(classpath, zookeeperPort);
+        zookeeperTestRunner.setQuiet(quiet);
 		try {
 			zookeeperTestRunner.startupServer();
 		} catch (Exception e) {
