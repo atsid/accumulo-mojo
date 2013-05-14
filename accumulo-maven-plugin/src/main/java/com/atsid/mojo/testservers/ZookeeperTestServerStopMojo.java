@@ -24,7 +24,9 @@ public class ZookeeperTestServerStopMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
 		try {
-			ObjectName zookeeperName = new ObjectName(ZookeeperTestRunner.class.getPackage().getName() + ":type="
+			ObjectName zookeeperName = new ObjectName(ZookeeperTestRunner.class
+					.getPackage().getName()
+					+ ":type="
 					+ ZookeeperTestRunner.class.getSimpleName());
 			server.invoke(zookeeperName, "shutdownServer", null, null);
 			getLog().info("Zookeeper server shutdown");

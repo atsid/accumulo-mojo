@@ -12,7 +12,8 @@ public class AccumuloGCRunner extends BaseAccumuloRunner {
 		super(baseDirectory, classpathEntries);
 	}
 
-	public AccumuloGCRunner(String hostname, File baseDirectory, List<String> classpathEntries) {
+	public AccumuloGCRunner(String hostname, File baseDirectory,
+			List<String> classpathEntries) {
 		super(baseDirectory, classpathEntries);
 		this.hostname = hostname;
 	}

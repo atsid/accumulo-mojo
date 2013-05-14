@@ -19,8 +19,6 @@ public class ZookeeperTestRunner extends AbstractServerTestRunner {
 	public ZookeeperTestRunner() {
 
 	}
-	
-	
 
 	public ZookeeperTestRunner(List<String> classpathEntries, Integer zooPort) {
 		super();
@@ -35,15 +33,18 @@ public class ZookeeperTestRunner extends AbstractServerTestRunner {
 		tempDir.mkdir();
 		tempDir.deleteOnExit();
 		String javaHome = System.getProperty("java.home");
-		String javaBin = javaHome + File.separator + "bin" + File.separator + "java";
+		String javaBin = javaHome + File.separator + "bin" + File.separator
+				+ "java";
 		String classpath;
 		if (classpathEntries == null) {
 			classpath = System.getProperty("java.class.path");
 		} else {
-			classpath = StringUtils.join(classpathEntries, File.pathSeparatorChar);
+			classpath = StringUtils.join(classpathEntries,
+					File.pathSeparatorChar);
 		}
-		ProcessBuilder processBuilder = new ProcessBuilder(javaBin, "-cp", classpath,
-				"org.apache.zookeeper.server.ZooKeeperServerMain", zooPort.toString(), tempDir.getAbsolutePath());
+		ProcessBuilder processBuilder = new ProcessBuilder(javaBin, "-cp",
+				classpath, "org.apache.zookeeper.server.ZooKeeperServerMain",
+				zooPort.toString(), tempDir.getAbsolutePath());
 		return processBuilder.start();
 
 	}

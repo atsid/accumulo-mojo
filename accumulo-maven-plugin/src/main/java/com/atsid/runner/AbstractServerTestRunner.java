@@ -10,7 +10,8 @@ import javax.management.ObjectName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractServerTestRunner implements ServerTestRunnerMXBean {
+public abstract class AbstractServerTestRunner implements
+		ServerTestRunnerMXBean {
 
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	private boolean quiet;
@@ -34,7 +35,7 @@ public abstract class AbstractServerTestRunner implements ServerTestRunnerMXBean
 			redirectInputStream(process.getErrorStream(), null);
 			redirectInputStream(process.getInputStream(), null);
 		} else {
-            logger.info("Test runner 'quiet' mode is disabled");
+			logger.info("Test runner 'quiet' mode is disabled");
 			redirectInputStream(process.getErrorStream(), System.err);
 			redirectInputStream(process.getInputStream(), System.out);
 		}
@@ -47,11 +48,12 @@ public abstract class AbstractServerTestRunner implements ServerTestRunnerMXBean
 	public void registerAsMBean() throws Exception {
 		String className = this.getClass().getSimpleName();
 		MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
-		ObjectName objectName = ObjectName.getInstance(String.format("%s:type=%s", getClass().getPackage().getName(),
-				className));
+		ObjectName objectName = ObjectName.getInstance(String.format(
+				"%s:type=%s", getClass().getPackage().getName(), className));
 		logger.info("Preparing to register as MBean");
 		mbeanServer.registerMBean(this, objectName);
-		logger.info("Started MBean service for " + this.getClass().getSimpleName());
+		logger.info("Started MBean service for "
+				+ this.getClass().getSimpleName());
 	}
 
 	public void shutdownServer() throws Exception {
@@ -64,8 +66,10 @@ public abstract class AbstractServerTestRunner implements ServerTestRunnerMXBean
 		}
 	}
 
-	protected void redirectInputStream(InputStream source, OutputStream destination) {
-		OutputRedirector outputRedirector = new OutputRedirector(source, destination);
+	protected void redirectInputStream(InputStream source,
+			OutputStream destination) {
+		OutputRedirector outputRedirector = new OutputRedirector(source,
+				destination);
 		Thread runnerThread = new Thread(outputRedirector);
 		runnerThread.setDaemon(true);
 		runnerThread.start();
@@ -75,7 +79,8 @@ public abstract class AbstractServerTestRunner implements ServerTestRunnerMXBean
 		private InputStream inputStream;
 		private OutputStream outputStream;
 
-		public OutputRedirector(InputStream inputStream, OutputStream outputStream) {
+		public OutputRedirector(InputStream inputStream,
+				OutputStream outputStream) {
 			this.inputStream = inputStream;
 			this.outputStream = outputStream;
 		}

@@ -34,7 +34,7 @@ public class ZookeeperTestServerRunMojo extends AbstractTestServerMojo {
 	 * parameter expression="${zookeeper.daemon} default-value="false"
 	 */
 	private boolean daemon;
-	
+
 	/**
 	 * @parameter expression="${zookeeper.quiet}" default-value="false"
 	 */

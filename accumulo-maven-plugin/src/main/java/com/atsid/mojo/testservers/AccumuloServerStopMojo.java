@@ -23,11 +23,13 @@ public class AccumuloServerStopMojo extends AbstractMojo {
 
 		ObjectName objectName;
 		try {
-			objectName = ObjectName.getInstance(String.format("%s:type=%s", AccumuloServerStartMojo.class.getPackage()
-					.getName(), className));
+			objectName = ObjectName.getInstance(String.format("%s:type=%s",
+					AccumuloServerStartMojo.class.getPackage().getName(),
+					className));
 			server.invoke(objectName, "shutdown", null, null);
 		} catch (Exception e) {
-			throw new MojoExecutionException("Error shutting down accumulo mojo", e);
+			throw new MojoExecutionException(
+					"Error shutting down accumulo mojo", e);
 		}
 
 	}

@@ -27,8 +27,10 @@ public class HDFSTestServerMojo extends AbstractMojo {
 		Runnable clusterRunnable = new Runnable() {
 			public void run() {
 				try {
-					System.setProperty("test.build.data", "target/accumuloPlugin/testData");
-					MiniDFSCluster miniCluster = new MiniDFSCluster(nameNodePort, new Configuration(), 1, true, true,
+					System.setProperty("test.build.data",
+							"target/accumuloPlugin/testData");
+					MiniDFSCluster miniCluster = new MiniDFSCluster(
+							nameNodePort, new Configuration(), 1, true, true,
 							StartupOption.FORMAT, null);
 					miniCluster.waitClusterUp();
 				} catch (IOException e) {
@@ -37,7 +39,8 @@ public class HDFSTestServerMojo extends AbstractMojo {
 			}
 		};
 		Thread miniClusterThread = new Thread(clusterRunnable);
-		miniClusterThread.setName("HDFS Minicluster-" + System.currentTimeMillis());
+		miniClusterThread.setName("HDFS Minicluster-"
+				+ System.currentTimeMillis());
 		miniClusterThread.setDaemon(true);
 		miniClusterThread.start();
 		try {

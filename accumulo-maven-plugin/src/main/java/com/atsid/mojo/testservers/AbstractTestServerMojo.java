@@ -44,12 +44,12 @@ public abstract class AbstractTestServerMojo extends AbstractMojo {
 	 * @readonly
 	 */
 	private List<Repository> pomRemoteRepositories;
-	
+
 	/**
 	 * @parameter expression="${project}"
 	 */
 	protected MavenProject project;
-	
+
 	/**
 	 * @component
 	 * @readonly
@@ -68,18 +68,22 @@ public abstract class AbstractTestServerMojo extends AbstractMojo {
 	public List<String> resolveClasspath() throws Exception {
 
 		if (resolvedClasspath == null) {
-			Artifact dummyOriginatingArtifact = artifactFactory.createBuildArtifact("org.apache.maven.plugins",
-					"maven-downloader-plugin", "1.0", "jar");
+			Artifact dummyOriginatingArtifact = artifactFactory
+					.createBuildArtifact("org.apache.maven.plugins",
+                            "maven-downloader-plugin", "1.0", "jar");
 
 			Set<Artifact> lookupArtifacts = new HashSet<Artifact>(artifacts);
-			ArtifactResolutionResult result = artifactResolver.resolveTransitively(lookupArtifacts,
-					dummyOriginatingArtifact, pomRemoteRepositories, localRepository, source);
-			resolvedClasspath = (List<String>) CollectionUtils.collect(result.getArtifacts(), new Transformer() {
-				public Object transform(Object input) {
-					return ((Artifact) input).getFile().getPath();
-				}
-			});
-			
+			ArtifactResolutionResult result = artifactResolver
+					.resolveTransitively(lookupArtifacts,
+                            dummyOriginatingArtifact, pomRemoteRepositories,
+                            localRepository, source);
+			resolvedClasspath = (List<String>) CollectionUtils.collect(
+					result.getArtifacts(), new Transformer() {
+						public Object transform(Object input) {
+							return ((Artifact) input).getFile().getPath();
+						}
+					});
+
 			resolvedClasspath.add(project.getArtifact().getFile().getPath());
 		}
 		return resolvedClasspath;

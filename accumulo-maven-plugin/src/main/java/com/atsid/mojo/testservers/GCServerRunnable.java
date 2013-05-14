@@ -5,17 +5,19 @@ import java.util.List;
 
 import com.atsid.runner.AccumuloGCRunner;
 
-public class GCServerRunnable implements ServerTestRunnerAwareRunnable<AccumuloGCRunner> {
+public class GCServerRunnable implements
+		ServerTestRunnerAwareRunnable<AccumuloGCRunner> {
 	private AccumuloGCRunner gc;
 	private File baseDirectory;
 	private List<String> classpath;
-    private boolean quiet;
+	private boolean quiet;
 
-	public GCServerRunnable(File baseDirectory, List<String> classpath, boolean quiet) {
+	public GCServerRunnable(File baseDirectory, List<String> classpath,
+			boolean quiet) {
 		super();
 		this.baseDirectory = baseDirectory;
 		this.classpath = classpath;
-        this.quiet = quiet;
+		this.quiet = quiet;
 	}
 
 	public AccumuloGCRunner getTestRunner() {
@@ -25,7 +27,7 @@ public class GCServerRunnable implements ServerTestRunnerAwareRunnable<AccumuloG
 	public void run() {
 		try {
 			gc = new AccumuloGCRunner(baseDirectory, classpath);
-            gc.setQuiet(this.quiet);
+			gc.setQuiet(this.quiet);
 			gc.startupServer();
 		} catch (Exception e) {
 			throw new RuntimeException("Error running GC server", e);

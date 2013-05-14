@@ -12,8 +12,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 import com.atsid.runner.AbstractServerTestRunner;
-import com.atsid.runner.BaseAccumuloRunner;
 import com.atsid.runner.AccumuloInitRunner;
+import com.atsid.runner.BaseAccumuloRunner;
 import com.atsid.runner.SetGoalStateRunner;
 
 /**
@@ -31,19 +31,18 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	private static final String STOPPED = "stopped";
 	private static final String STARTED = "started";
 
-    /**
-     * @parameter expression="${accumulo.quiet}" default-value="false"
-     */
-    private boolean accumuloQuiet;
-
-    /**
-     * @parameter expression="${zookeeper.quiet}" default-value="false"
-     */
-    private boolean zookeeperQuiet;
+	/**
+	 * @parameter expression="${accumulo.quiet}" default-value="false"
+	 */
+	private boolean accumuloQuiet;
 
 	/**
-	 * @parameter expression="${accumulo.instanceName}"
-	 *            default-value="accumulo"
+	 * @parameter expression="${zookeeper.quiet}" default-value="false"
+	 */
+	private boolean zookeeperQuiet;
+
+	/**
+	 * @parameter expression="${accumulo.instanceName}" default-value="accumulo"
 	 */
 	private String instanceName;
 
@@ -138,9 +137,9 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	}
 
 	protected void initCloudbase(File baseDirectory) throws Exception {
-		BaseAccumuloRunner initProcess = new AccumuloInitRunner(
-				baseDirectory, resolveClasspath(), instanceName, password,
-				dfsRPCPort, zookeeperPort);
+		BaseAccumuloRunner initProcess = new AccumuloInitRunner(baseDirectory,
+				resolveClasspath(), instanceName, password, dfsRPCPort,
+				zookeeperPort);
 		initProcess.startupServer();
 	}
 
@@ -177,7 +176,8 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	}
 
 	protected void startGC(final File baseDirectory) throws Exception {
-		gcServerRunner = new GCServerRunnable(baseDirectory, resolveClasspath(), accumuloQuiet);
+		gcServerRunner = new GCServerRunnable(baseDirectory,
+				resolveClasspath(), accumuloQuiet);
 		Thread gcThread = new Thread(gcServerRunner);
 		gcThread.setDaemon(true);
 		gcThread.setName("GC Server " + System.currentTimeMillis());
@@ -217,17 +217,18 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 			dfsService.getTestRunner().shutdown();
 
 			getLog().info("Waiting for Hadoop to shutdown");
-			
+
 			// Sleep while we wait for hadoop to shutdown. If we do not sleep
 			// then we can get into a situation where the NameNode has been
 			// shutdown but the DataNode has not finished cleaning up its
 			// connections by the time the mojo is executed again. Since the
 			// connections are static then the new DataNode will use a socket
 			// that already existed and get an EOF exception.
-			
+
 			// See:
 			// org.apache.hadoop.ipc.RPC$ClientCache.class
-			// org.apache.hadoop.server.datanode.DataNode.class line 758 ( "RPC.stopProxy(namenode)" )
+			// org.apache.hadoop.server.datanode.DataNode.class line 758 (
+			// "RPC.stopProxy(namenode)" )
 			java.lang.Thread.sleep(10000);
 		}
 
