@@ -6,4 +6,6 @@
 *.iws
 .DS_Store
 log/
+build
+reports
 target/
