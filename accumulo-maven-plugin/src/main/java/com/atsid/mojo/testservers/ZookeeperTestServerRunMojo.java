@@ -24,9 +24,9 @@ import com.atsid.runner.ZookeeperTestRunner;
 /**
  * Goal which starts up a local zookeeper instance
  * 
- * @goal run
+ * @goal start-zookeeper
  * @requiresDependencyResolution runtime
- * @phase process-sources
+ * @phase pre-integration-test
  */
 public class ZookeeperTestServerRunMojo extends AbstractTestServerMojo {
 
@@ -46,6 +46,7 @@ public class ZookeeperTestServerRunMojo extends AbstractTestServerMojo {
 				getLog().info("Starting zookeeper server");
 				try {
 					ZookeeperTestRunner zookeeperTestRunner = new ZookeeperTestRunner();
+                    zookeeperTestRunner.registerAsMBean();
 					zookeeperTestRunner.setClasspathEntries(resolveClasspath());
 					zookeeperTestRunner.setQuiet(quiet);
 					zookeeperTestRunner.startupServer();

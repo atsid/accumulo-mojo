@@ -14,7 +14,7 @@ import com.atsid.runner.ZookeeperTestRunner;
 /**
  * @author jamesm
  * 
- * @goal stop
+ * @goal stop-zookeeper
  * @phase post-integration-test
  */
 public class ZookeeperTestServerStopMojo extends AbstractMojo {
