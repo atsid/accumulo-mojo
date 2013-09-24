@@ -79,4 +79,15 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<goalPrefix>accumulo</goalPrefix>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
