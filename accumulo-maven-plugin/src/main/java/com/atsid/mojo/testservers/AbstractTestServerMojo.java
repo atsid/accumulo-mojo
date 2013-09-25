@@ -33,20 +33,20 @@ public abstract class AbstractTestServerMojo extends AbstractMojo {
 	private ArtifactResolver artifactResolver;
 	/**
 	 * 
-	 * @parameter expression="${localRepository}"
+	 * @parameter property="localRepository"
 	 * @readonly
 	 */
 	private ArtifactRepository localRepository;
 	/**
 	 * 
-	 * @parameter expression="${project.remoteArtifactRepositories}"
+	 * @parameter property="project.remoteArtifactRepositories"
 	 * @required
 	 * @readonly
 	 */
 	private List<Repository> pomRemoteRepositories;
 
 	/**
-	 * @parameter expression="${project}"
+	 * @parameter property="project"
 	 */
 	protected MavenProject project;
 
@@ -56,7 +56,7 @@ public abstract class AbstractTestServerMojo extends AbstractMojo {
 	 */
 	private ArtifactFactory artifactFactory;
 	/**
-	 * @parameter expression="${plugin.artifacts}"
+	 * @parameter property="plugin.artifacts"
 	 */
 	private List<Artifact> artifacts;
 

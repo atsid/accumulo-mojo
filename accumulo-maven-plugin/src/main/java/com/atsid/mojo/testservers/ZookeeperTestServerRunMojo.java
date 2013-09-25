@@ -31,12 +31,12 @@ import com.atsid.runner.ZookeeperTestRunner;
 public class ZookeeperTestServerRunMojo extends AbstractTestServerMojo {
 
 	/**
-	 * parameter expression="${zookeeper.daemon} default-value="false"
+	 * parameter property="zookeeper.daemon" default-value="false"
 	 */
 	private boolean daemon;
 
 	/**
-	 * @parameter expression="${zookeeper.quiet}" default-value="false"
+	 * @parameter property="zookeeper.quiet" default-value="false"
 	 */
 	private boolean quiet;
 

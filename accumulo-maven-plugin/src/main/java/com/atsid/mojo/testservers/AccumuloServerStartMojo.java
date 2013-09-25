@@ -34,33 +34,33 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	private static final String STARTED = "started";
 
 	/**
-	 * @parameter expression="${accumulo.quiet}" default-value="false"
+	 * @parameter property="accumulo.quiet" default-value="false"
 	 */
 	private boolean accumuloQuiet;
 
 	/**
-	 * @parameter expression="${zookeeper.quiet}" default-value="false"
+	 * @parameter property="zookeeper.quiet" default-value="false"
 	 */
 	private boolean zookeeperQuiet;
 
 	/**
-	 * @parameter expression="${accumulo.instanceName}" default-value="accumulo"
+	 * @parameter property="accumulo.instanceName" default-value="accumulo"
 	 */
 	private String instanceName;
 
 	/**
-	 * @parameter expression="${hadoop.dfsRPCPort}" default-value="9000"
+	 * @parameter property="hadoop.dfsRPCPort" default-value="9000"
 	 */
 
 	private int dfsRPCPort;
 
 	/**
-	 * @parameter expression="${zookeeper.port}" default-value="2181"
+	 * @parameter property="zookeeper.port" default-value="2181"
 	 */
 	private int zookeeperPort;
 
 	/**
-	 * @parameter expression="${accumulo.password}" default-value="password"
+	 * @parameter property="accumulo.password" default-value="password"
 	 */
 	private String password;
 
