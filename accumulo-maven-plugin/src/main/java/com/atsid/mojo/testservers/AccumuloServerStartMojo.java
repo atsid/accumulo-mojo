@@ -1,6 +1,7 @@
 package com.atsid.mojo.testservers;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -74,6 +76,8 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 
 	private GCServerRunnable gcServerRunner;
 
+	private File accumuloTemporaryDirectory;
+
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		String state = project.getProperties().getProperty(
 				this.getClass().toString());
@@ -87,18 +91,17 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 		try {
 			String hostname = InetAddress.getLocalHost().getHostName();
 			registerAsMBean();
-			File baseDirectory = File.createTempFile("accumulo", "");
-			baseDirectory.deleteOnExit();
-			baseDirectory.delete();
-			baseDirectory.mkdir();
+			accumuloTemporaryDirectory = File.createTempFile("accumulo", "");
+			accumuloTemporaryDirectory.delete();
+			accumuloTemporaryDirectory.mkdir();
 			startDFS();
 			startZookeeper();
-			initCloudbase(baseDirectory);
-			startLogger(baseDirectory);
-			startTServer(hostname, baseDirectory);
-			setGoalState(baseDirectory);
-			startMasterServer(hostname, baseDirectory);
-			startGC(baseDirectory);
+			initCloudbase(accumuloTemporaryDirectory);
+			startLogger(accumuloTemporaryDirectory);
+			startTServer(hostname, accumuloTemporaryDirectory);
+			setGoalState(accumuloTemporaryDirectory);
+			startMasterServer(hostname, accumuloTemporaryDirectory);
+			startGC(accumuloTemporaryDirectory);
 		} catch (Exception e) {
 			throw new MojoExecutionException("Error running accumulo", e);
 		}
@@ -240,6 +243,21 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 				"%s:type=%s", getClass().getPackage().getName(), className));
 		mbeanServer.unregisterMBean(objectName);
 		getLog().info("Done shutting down services");
+
+		try {
+			// We cannot use the normal file.deleteOnExit() because it will not
+			// delete a non-empty directory. The Apache version will delete a
+			// non-empty directory. We have to wait until after the scheduled
+			// shutdown to invoke it because it traverses the directory tree and
+			// schedules each file for deletion individually.
+			getLog().info(
+					"Scheduling directory for deletion: "
+							+ this.accumuloTemporaryDirectory.getAbsolutePath());
+			FileUtils.forceDeleteOnExit(accumuloTemporaryDirectory);
+		} catch (IOException e) {
+			throw new MojoExecutionException(
+					"Error deleting Accumulo temporary directory", e);
+		}
 	}
 
 	protected void shutdownCloudbaseTestRunner(

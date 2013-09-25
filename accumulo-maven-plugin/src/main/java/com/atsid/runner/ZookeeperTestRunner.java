@@ -1,14 +1,18 @@
 package com.atsid.runner;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.maven.plugin.MojoExecutionException;
 
 public class ZookeeperTestRunner extends AbstractServerTestRunner {
 
 	private List<String> classpathEntries;
 	private Integer zooPort = 2181;
+	private File zookeeperTemporaryDirectory;
 
 	public static void main(String[] args) throws Exception {
 		ZookeeperTestRunner runner = new ZookeeperTestRunner();
@@ -17,7 +21,6 @@ public class ZookeeperTestRunner extends AbstractServerTestRunner {
 	}
 
 	public ZookeeperTestRunner() {
-
 	}
 
 	public ZookeeperTestRunner(List<String> classpathEntries, Integer zooPort) {
@@ -28,10 +31,10 @@ public class ZookeeperTestRunner extends AbstractServerTestRunner {
 
 	@Override
 	protected Process initServer() throws Exception {
-		File tempDir = File.createTempFile("zoo", "");
-		tempDir.delete();
-		tempDir.mkdir();
-		tempDir.deleteOnExit();
+		zookeeperTemporaryDirectory = File.createTempFile("zoo", "");
+		zookeeperTemporaryDirectory.delete();
+		zookeeperTemporaryDirectory.mkdir();
+
 		String javaHome = System.getProperty("java.home");
 		String javaBin = javaHome + File.separator + "bin" + File.separator
 				+ "java";
@@ -44,7 +47,8 @@ public class ZookeeperTestRunner extends AbstractServerTestRunner {
 		}
 		ProcessBuilder processBuilder = new ProcessBuilder(javaBin, "-cp",
 				classpath, "org.apache.zookeeper.server.ZooKeeperServerMain",
-				zooPort.toString(), tempDir.getAbsolutePath());
+				zooPort.toString(),
+				zookeeperTemporaryDirectory.getAbsolutePath());
 		return processBuilder.start();
 
 	}
@@ -63,5 +67,21 @@ public class ZookeeperTestRunner extends AbstractServerTestRunner {
 
 	public void setZooPort(Integer zooPort) {
 		this.zooPort = zooPort;
+	}
+
+	@Override
+	public void shutdownServer() throws Exception {
+		super.shutdownServer();
+
+		try {
+			// We cannot use the normal file.deleteOnExit() because it will not
+			// delete a non-empty directory. The Apache version will delete a
+			// non-empty directory. We have to wait until after the scheduled
+			// shutdown to invoke it because it traverses the directory tree and
+			// schedules each file for deletion individually.
+			FileUtils.forceDeleteOnExit(this.zookeeperTemporaryDirectory);
+		} catch (IOException e) {
+			throw new MojoExecutionException("Error deleting Zookeeper logs", e);
+		}
 	}
 }
