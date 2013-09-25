@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.atsid.mojo</groupId>
@@ -10,29 +11,8 @@
 	<name>Accumulo Plugin Integration Tests</name>
 	<dependencies>
 		<dependency>
-			<groupId>com.atsid.mojo</groupId>
-			<artifactId>accumulo-maven-plugin</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.accumulo</groupId>
 			<artifactId>accumulo-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.accumulo</groupId>
-			<artifactId>accumulo-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.accumulo</groupId>
-			<artifactId>accumulo-start</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.hadoop</groupId>
@@ -41,20 +21,6 @@
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -80,6 +46,19 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<configuration>
+					<usedDependencies>
+						<usedDependency>org.apache.zookeeper:zookeeper</usedDependency>
+					</usedDependencies>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
