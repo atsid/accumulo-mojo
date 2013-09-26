@@ -18,6 +18,8 @@ import org.apache.maven.plugin.MojoFailureException;
 public class HDFSTestServerMojo extends AbstractMojo {
 
 	/**
+     * Port to run the HDFS NameNode on
+     *
 	 * @parameter property="dfs.namenodeport" default-value="9000"
 	 */
 	private int nameNodePort;
