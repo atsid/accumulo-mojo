@@ -38,7 +38,7 @@ public class ZookeeperTestServerRunMojo extends AbstractTestServerMojo {
 	/**
 	 * @parameter property="zookeeper.quiet" default-value="false"
 	 */
-	private boolean quiet;
+	private boolean zookeeperQuiet;
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		Thread thread = new Thread(new Runnable() {
@@ -46,9 +46,9 @@ public class ZookeeperTestServerRunMojo extends AbstractTestServerMojo {
 				getLog().info("Starting zookeeper server");
 				try {
 					ZookeeperTestRunner zookeeperTestRunner = new ZookeeperTestRunner();
-                    zookeeperTestRunner.registerAsMBean();
+					zookeeperTestRunner.registerAsMBean();
 					zookeeperTestRunner.setClasspathEntries(resolveClasspath());
-					zookeeperTestRunner.setQuiet(quiet);
+					zookeeperTestRunner.setQuiet(zookeeperQuiet);
 					zookeeperTestRunner.startupServer();
 				} catch (Exception e) {
 					getLog().error(e);

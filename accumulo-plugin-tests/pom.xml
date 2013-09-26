@@ -33,6 +33,10 @@
 				<groupId>com.atsid.mojo</groupId>
 				<artifactId>accumulo-maven-plugin</artifactId>
 				<version>${project.version}</version>
+				<configuration>
+					<zookeeperQuiet>true</zookeeperQuiet>
+					<accumuloQuiet>true</accumuloQuiet>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>

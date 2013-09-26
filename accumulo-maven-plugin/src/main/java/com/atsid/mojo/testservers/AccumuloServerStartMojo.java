@@ -96,7 +96,7 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 			accumuloTemporaryDirectory.mkdir();
 			startDFS();
 			startZookeeper();
-			initCloudbase(accumuloTemporaryDirectory);
+			initializeAccumulo(accumuloTemporaryDirectory);
 			startLogger(accumuloTemporaryDirectory);
 			startTServer(hostname, accumuloTemporaryDirectory);
 			setGoalState(accumuloTemporaryDirectory);
@@ -111,6 +111,7 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 		getLog().info("Setting goal state to normal");
 		SetGoalStateRunner runner = new SetGoalStateRunner(baseDirectory,
 				resolveClasspath());
+		runner.setQuiet(this.accumuloQuiet);
 		runner.startupServer();
 	}
 
@@ -139,10 +140,11 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 
 	}
 
-	protected void initCloudbase(File baseDirectory) throws Exception {
+	protected void initializeAccumulo(File baseDirectory) throws Exception {
 		BaseAccumuloRunner initProcess = new AccumuloInitRunner(baseDirectory,
 				resolveClasspath(), instanceName, password, dfsRPCPort,
 				zookeeperPort);
+		initProcess.setQuiet(this.accumuloQuiet);
 		initProcess.startupServer();
 	}
 
