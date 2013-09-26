@@ -47,6 +47,8 @@ public abstract class AbstractTestServerMojo extends AbstractMojo {
 
 	/**
 	 * @parameter property="project"
+     * @required
+     * @readonly
 	 */
 	protected MavenProject project;
 
@@ -55,8 +57,11 @@ public abstract class AbstractTestServerMojo extends AbstractMojo {
 	 * @readonly
 	 */
 	private ArtifactFactory artifactFactory;
+
 	/**
 	 * @parameter property="plugin.artifacts"
+     * @required
+     * @readonly
 	 */
 	private List<Artifact> artifacts;
 

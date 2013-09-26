@@ -19,11 +19,20 @@ import com.atsid.runner.BaseAccumuloRunner;
 import com.atsid.runner.SetGoalStateRunner;
 
 /**
- * Starts up accumulo so it can be run in a test environment This starts up the
- * following services
- * 
- * zookeeper hdfs master server tablet server gc server logging server
- * 
+ * <pre>
+ * Starts up accumulo so it can be run in a test environment.
+ *
+ * This starts up the following services:
+ * </pre>
+ * <ol>
+ * <li>Zookeeper</li>
+ * <li>HDFS</li>
+ * <li>Accumulo master server</li>
+ * <li>Accumulo tablet server</li>
+ * <li>Accumulo gc server</li>
+ * <li>Accumulo logging server</li>
+ * </ol>
+ *
  * @goal start-accumulo
  * @phase package
  */
@@ -34,35 +43,49 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	private static final String STARTED = "started";
 
 	/**
-	 * @parameter property="accumulo.quiet" default-value="false"
+	 * If true then the output of the accumulo server will be dropped. If false
+	 * then the output of the accumulo server will be written to the console.
+	 * 
+	 * @parameter property="accumuloQuiet" default-value="false"
 	 */
 	private boolean accumuloQuiet;
 
 	/**
-	 * @parameter property="zookeeper.quiet" default-value="false"
+	 * If true then the output of the zookeeper server will be dropped. If false
+	 * then the output of the zookeeper server will be written to the console.
+	 * 
+	 * @parameter property="zookeeperQuiet" default-value="false"
 	 */
 	private boolean zookeeperQuiet;
 
 	/**
-	 * @parameter property="accumulo.instanceName" default-value="accumulo"
+	 * Name of the Accumulo instance. Default value is "accumulo"
+	 * 
+	 * @parameter property="accumuloInstanceName" default-value="accumulo"
 	 */
-	private String instanceName;
+	private String accumuloInstanceName;
 
 	/**
-	 * @parameter property="hadoop.dfsRPCPort" default-value="9000"
+	 * HDFS RPC port. Default value is 9000.
+	 * 
+	 * @parameter property="dfsRPCPort" default-value="9000"
 	 */
 
 	private int dfsRPCPort;
 
 	/**
-	 * @parameter property="zookeeper.port" default-value="2181"
+	 * Zookeeper server port. Default value is 2181.
+	 * 
+	 * @parameter property="zookeeperPort" default-value="2181"
 	 */
 	private int zookeeperPort;
 
 	/**
-	 * @parameter property="accumulo.password" default-value="password"
+	 * Password for the Accumulo user "root." Default value is "password"
+	 * 
+	 * @parameter property="accumuloPassword" default-value="password"
 	 */
-	private String password;
+	private String accumuloPassword;
 
 	private MiniDFSServerRunnable dfsService;
 
@@ -142,8 +165,8 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 
 	protected void initializeAccumulo(File baseDirectory) throws Exception {
 		BaseAccumuloRunner initProcess = new AccumuloInitRunner(baseDirectory,
-				resolveClasspath(), instanceName, password, dfsRPCPort,
-				zookeeperPort);
+				resolveClasspath(), accumuloInstanceName, accumuloPassword,
+				dfsRPCPort, zookeeperPort);
 		initProcess.setQuiet(this.accumuloQuiet);
 		initProcess.startupServer();
 	}

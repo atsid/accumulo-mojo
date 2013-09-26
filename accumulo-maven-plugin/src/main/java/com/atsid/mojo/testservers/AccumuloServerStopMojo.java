@@ -10,6 +10,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
+ * Stops a local Accumulo server that was started by the "start-accumulo" goal.
+ * 
  * @goal stop-accumulo
  * @phase verify
  * @author jamesm

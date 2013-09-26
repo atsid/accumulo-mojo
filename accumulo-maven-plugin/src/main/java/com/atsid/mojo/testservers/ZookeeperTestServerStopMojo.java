@@ -12,6 +12,9 @@ import org.apache.maven.plugin.MojoFailureException;
 import com.atsid.runner.ZookeeperTestRunner;
 
 /**
+ * Stops a local zookeeper instance that was started by the "start-zookeeper"
+ * goal.
+ * 
  * @author jamesm
  * 
  * @goal stop-zookeeper

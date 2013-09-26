@@ -22,7 +22,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import com.atsid.runner.ZookeeperTestRunner;
 
 /**
- * Goal which starts up a local zookeeper instance
+ * Starts a local zookeeper instance
  * 
  * @goal start-zookeeper
  * @requiresDependencyResolution runtime
@@ -31,12 +31,16 @@ import com.atsid.runner.ZookeeperTestRunner;
 public class ZookeeperTestServerRunMojo extends AbstractTestServerMojo {
 
 	/**
-	 * parameter property="zookeeper.daemon" default-value="false"
+	 * If true then this mojo will not return until the server is stopped.
+	 * @parameter property="zookeeper.daemon" default-value="false"
 	 */
 	private boolean daemon;
 
 	/**
-	 * @parameter property="zookeeper.quiet" default-value="false"
+	 * If true then the output of the zookeeper server will be dropped. If false
+	 * then the output of the zookeeper server will be written to the console.
+	 * 
+	 * @parameter property="zookeeperQuiet" default-value="false"
 	 */
 	private boolean zookeeperQuiet;
 
