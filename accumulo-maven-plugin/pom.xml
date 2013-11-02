@@ -27,6 +27,10 @@
 			<artifactId>accumulo-start</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.accumulo</groupId>
+			<artifactId>accumulo-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.hadoop</groupId>
 			<artifactId>hadoop-core</artifactId>
 			<exclusions>

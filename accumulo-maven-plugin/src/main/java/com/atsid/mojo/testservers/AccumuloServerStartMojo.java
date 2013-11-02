@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import com.atsid.utilities.TableInitializer;
+import org.apache.accumulo.core.client.AccumuloException;
+import org.apache.accumulo.core.client.AccumuloSecurityException;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -21,7 +25,7 @@ import com.atsid.runner.SetGoalStateRunner;
 /**
  * <pre>
  * Starts up accumulo so it can be run in a test environment.
- *
+ * 
  * This starts up the following services:
  * </pre>
  * <ol>
@@ -32,7 +36,7 @@ import com.atsid.runner.SetGoalStateRunner;
  * <li>Accumulo gc server</li>
  * <li>Accumulo logging server</li>
  * </ol>
- *
+ * 
  * @goal start-accumulo
  * @phase package
  */
@@ -87,6 +91,13 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	 */
 	private String accumuloPassword;
 
+	/**
+	 * Tables to create after Accumulo has been initialized.
+	 * 
+	 * @parameter property="defaultTables"
+	 */
+	private List<String> defaultTables;
+
 	private MiniDFSServerRunnable dfsService;
 
 	private ZookeeperRunnable zookeeperRunnable;
@@ -125,6 +136,7 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 			setGoalState(accumuloTemporaryDirectory);
 			startMasterServer(hostname, accumuloTemporaryDirectory);
 			startGC(accumuloTemporaryDirectory);
+            createDefaultTables();
 		} catch (Exception e) {
 			throw new MojoExecutionException("Error running accumulo", e);
 		}
@@ -201,6 +213,14 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 		logThread.setDaemon(true);
 		logThread.setName("Logger " + System.currentTimeMillis());
 		logThread.start();
+	}
+
+	private void createDefaultTables() throws AccumuloSecurityException,
+			AccumuloException {
+		TableInitializer tableInitializer = new TableInitializer(
+				this.accumuloInstanceName, this.zookeeperPort,
+				this.accumuloPassword);
+		tableInitializer.addTables(this.defaultTables);
 	}
 
 	protected void startGC(final File baseDirectory) throws Exception {

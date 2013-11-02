@@ -36,6 +36,10 @@
 				<configuration>
 					<zookeeperQuiet>true</zookeeperQuiet>
 					<accumuloQuiet>true</accumuloQuiet>
+					<defaultTables>
+						<param>tableOne</param>
+						<param>tableTwo</param>
+					</defaultTables>
 				</configuration>
 				<executions>
 					<execution>
