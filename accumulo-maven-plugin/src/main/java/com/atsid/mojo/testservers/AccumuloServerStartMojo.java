@@ -99,6 +99,17 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 	 */
 	private List<String> defaultTables;
 
+	/**
+	 * If true then the mojo will return after Accumulo has started. If false
+	 * then the mojo will wait for CTRL-C before returning. Setting this to
+	 * "false" allows you to start an accumulo server easily from the
+	 * command-line. Default value is "true" (used for integration tests in a
+	 * POM file).
+	 * 
+	 * @parameter property="daemon" default-value="true"
+	 */
+	private boolean daemon;
+
 	private MiniDFSServerRunnable dfsService;
 
 	private ZookeeperRunnable zookeeperRunnable;
@@ -138,12 +149,48 @@ public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 			startMasterServer(hostname, accumuloTemporaryDirectory);
 			startGC(accumuloTemporaryDirectory);
             createDefaultTables();
+
+			if (!this.daemon) {
+                runUntilCanceled();
+			}
 		} catch (Exception e) {
 			throw new MojoExecutionException("Error running accumulo", e);
 		}
 	}
 
-	protected void setGoalState(File baseDirectory) throws Exception {
+	/**
+	 * Method waits until the user presses "CTRL-C" before returning. This is
+	 * useful to easily start an Accumulo server from the command-line.
+	 * 
+	 * @throws InterruptedException
+	 */
+    private void runUntilCanceled() throws InterruptedException {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                getLog().info(
+                        "Interrupt received, killing Accumulo server…");
+                try {
+                    shutdown();
+                } catch (Exception e) {
+                }
+            }
+        });
+
+        while (true) {
+            // Continuously output this message. This plugin can be a
+            // bit noisy on the command-line so we
+            // want to output this "how-to-quit" message every so often.
+            getLog().info(
+                    "*********************************************");
+            getLog().info("Accumulo running ... press CTRL-C to quit");
+            getLog().info(
+                    "*********************************************");
+            Thread.sleep(30000);
+        }
+    }
+
+    protected void setGoalState(File baseDirectory) throws Exception {
 		getLog().info("Setting goal state to normal");
 		SetGoalStateRunner runner = new SetGoalStateRunner(baseDirectory,
 				resolveClasspath());
