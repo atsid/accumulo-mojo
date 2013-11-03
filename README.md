@@ -78,4 +78,15 @@ Usage
       Iterator<Entry<Key,Value>> scannerIter = scanner.iterator();
     
     ...
+
 ```
+
+### Use from the command line
+ * Run 'mvn com.atsid.mojo:accumulo-maven-plugin:0.2.8-SNAPSHOT:start-accumulo -DdefaultTables=myTable -Ddaemon=false -DaccumuloQuiet=true -DzookeeperQuiet=true'
+ * A log message will be written to the console when Accumulo is initialized
+ * Default connection information:
+ ** Instance: accumulo
+ ** Zookeeper: localhost:2181
+ ** User: root
+ ** Password: password
+ * When ready to shut down the Accumulo instance press CTRL-C
