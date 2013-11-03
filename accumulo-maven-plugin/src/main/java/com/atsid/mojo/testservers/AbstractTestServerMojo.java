@@ -89,7 +89,11 @@ public abstract class AbstractTestServerMojo extends AbstractMojo {
 						}
 					});
 
-			resolvedClasspath.add(project.getArtifact().getFile().getPath());
+			if (project != null && project.getArtifact() != null
+					&& project.getArtifact().getFile() != null) {
+				resolvedClasspath
+						.add(project.getArtifact().getFile().getPath());
+			}
 		}
 		return resolvedClasspath;
 	}

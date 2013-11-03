@@ -39,6 +39,7 @@ import com.atsid.runner.SetGoalStateRunner;
  * 
  * @goal start-accumulo
  * @phase package
+ * @requiresProject false
  */
 public class AccumuloServerStartMojo extends AbstractTestServerMojo implements
 		MojoMXBean {

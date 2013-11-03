@@ -14,6 +14,7 @@ import org.apache.maven.plugin.MojoFailureException;
  * 
  * @goal stop-accumulo
  * @phase verify
+ * @requiresProject false
  * @author jamesm
  * 
  */
