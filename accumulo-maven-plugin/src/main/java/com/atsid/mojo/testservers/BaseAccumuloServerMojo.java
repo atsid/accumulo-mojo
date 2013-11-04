@@ -57,13 +57,6 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 	 */
 	private String accumuloPassword;
 
-	/**
-	 * Tables to create after Accumulo has been initialized.
-	 * 
-	 * @parameter property="defaultTables"
-	 */
-	private List<String> defaultTables;
-
 	private MiniDFSServerRunnable dfsService;
 
 	private ZookeeperRunnable zookeeperRunnable;
@@ -107,7 +100,7 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 			startMasterServer(hostname, accumuloTemporaryDirectory);
 			startGC(accumuloTemporaryDirectory);
 			createDefaultTables();
-        } catch (Exception e) {
+		} catch (Exception e) {
 			throw new MojoExecutionException("Error running accumulo", e);
 		}
 	}
@@ -129,6 +122,15 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 	 *         Zookeeper output.
 	 */
 	protected abstract boolean getZookeeperQuiet();
+
+	/**
+	 * List of default tables to create after the Accumulo server starts.
+	 * Abstract method is used instead of a private field because the comments
+	 * are different on each mojo.
+	 * 
+	 * @return
+	 */
+	protected abstract List<String> getDefaultTables();
 
 	protected void setGoalState(File baseDirectory) throws Exception {
 		getLog().info("Setting goal state to normal");
@@ -208,7 +210,7 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 		TableInitializer tableInitializer = new TableInitializer(
 				this.accumuloInstanceName, this.zookeeperPort,
 				this.accumuloPassword);
-		tableInitializer.addTables(this.defaultTables);
+		tableInitializer.addTables(this.getDefaultTables());
 	}
 
 	protected void startGC(final File baseDirectory) throws Exception {

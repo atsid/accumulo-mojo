@@ -3,6 +3,8 @@ package com.atsid.mojo.testservers;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import java.util.List;
+
 /**
  * <pre>
  * Starts up accumulo so it can be run in a test environment.
@@ -46,6 +48,25 @@ public class AccumuloServerStartMojo extends BaseAccumuloServerMojo implements
 	 */
 	private boolean zookeeperQuiet;
 
+    /**
+     * List of tables to create after Accumulo has been initialized. Default is an empty
+     * list.
+     *
+     * <pre>
+     * {@code
+     * <configuration>
+     *  <defaultTables>
+     *   <param>tableOne</param>
+     *   <param>tableTwo</param>
+     *  </defaultTables>
+     * </configuration>
+     * }
+     * </pre>
+     *
+     * @parameter property="defaultTables"
+     */
+    private List<String> defaultTables;
+
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		this.executeInternal();
@@ -64,4 +85,9 @@ public class AccumuloServerStartMojo extends BaseAccumuloServerMojo implements
 	protected boolean getZookeeperQuiet() {
 		return this.zookeeperQuiet;
 	}
+
+    @Override
+    protected List<String> getDefaultTables() {
+        return this.defaultTables;
+    }
 }

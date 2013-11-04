@@ -1,5 +1,7 @@
 package com.atsid.mojo.testservers;
 
+import java.util.List;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -54,6 +56,14 @@ public class AccumuloStandaloneServerMojo extends BaseAccumuloServerMojo
 	 */
 	private boolean loopShutdownMessage;
 
+	/**
+	 * Comma-separated list of tables to create after Accumulo has been
+	 * initialized. Default is an empty list.
+	 * 
+	 * @parameter property="defaultTables"
+	 */
+	private List<String> defaultTables;
+
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		this.executeInternal();
@@ -79,7 +89,12 @@ public class AccumuloStandaloneServerMojo extends BaseAccumuloServerMojo
 		return this.zookeeperQuiet;
 	}
 
-	/**
+    @Override
+    protected List<String> getDefaultTables() {
+        return this.defaultTables;
+    }
+
+    /**
 	 * Method waits until the user presses "CTRL-C" before returning. This is
 	 * useful to easily start an Accumulo server from the command-line.
 	 * 
