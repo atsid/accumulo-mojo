@@ -43,6 +43,17 @@ public class AccumuloStandaloneServerMojo extends BaseAccumuloServerMojo
 	 */
 	private boolean zookeeperQuiet;
 
+	/**
+	 * If true then a heartbeat message that says
+	 * "Accumulo running ... press CTRL-C to quit" will be output to the
+	 * command-line every thirty seconds. The original "Accumulo started"
+	 * message may get pushed off the screen by the server log messages. Default
+	 * value is "true."
+	 * 
+	 * @parameter property="loopShutdownMessage" default-value="true"
+	 */
+	private boolean loopShutdownMessage;
+
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		this.executeInternal();
@@ -89,12 +100,14 @@ public class AccumuloStandaloneServerMojo extends BaseAccumuloServerMojo
 		while (true) {
 			Thread.sleep(30000);
 
-			// Continuously output this message. This plugin can be a bit
-			// noisy on the command-line so we want to output this
-			// "how-to-quit" message every so often.
-			getLog().info("*********************************************");
-			getLog().info("Accumulo running ... press CTRL-C to quit");
-			getLog().info("*********************************************");
+			if (this.loopShutdownMessage) {
+				// Continuously output this message. This plugin can be a bit
+				// noisy on the command-line so we want to output this
+				// "how-to-quit" message every so often.
+				getLog().info("*********************************************");
+				getLog().info("Accumulo running ... press CTRL-C to quit");
+				getLog().info("*********************************************");
+			}
 		}
 	}
 }
