@@ -11,10 +11,9 @@
 		<module>accumulo-plugin-tests</module>
 	</modules>
 	<scm>
-		<connection>scm:git:https://github.com/atsid/accumulo-mojo.git</connection>
-		<developerConnection>scm:git:https://github.com/atsid/accumulo-mojo.git</developerConnection>
+		<connection>scm:git:ssh://github.com//atsid/accumulo-mojo.git</connection>
 		<tag>HEAD</tag>
-		<url>scm:git:https://github.com/atsid/accumulo-mojo.git</url>
+		<url>scm:git:ssh://github.com/atsid/accumulo-mojo.git</url>
 	</scm>
 	<properties>
 		<accumulo.version>1.4.3</accumulo.version>
