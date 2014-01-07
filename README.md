@@ -104,6 +104,7 @@ This plugin has a "help" goal that will provide basic usage information.
  * Default User: root
  * Default Password: password
  * When ready to shut down the Accumulo instance press CTRL-C
+ * Maven project not required to execute this goal
 
 #### Run Accumulo shell goal
  * Run 'mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:shell'
@@ -111,3 +112,4 @@ This plugin has a "help" goal that will provide basic usage information.
  * Default Zookeeper: localhost:2181
  * Default User: root
  * Default Password: password
+ * Maven project not required to execute this goal
