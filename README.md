@@ -82,10 +82,25 @@ Usage
 ```
 
 ### Use from the command line
- * Run 'mvn com.atsid.mojo:accumulo-maven-plugin:0.2.8-SNAPSHOT:start-accumulo -DdefaultTables=myTable -Ddaemon=false -DaccumuloQuiet=true -DzookeeperQuiet=true'
+Most goals are designed to work within the integration test environment.  Only the "standalone" and "shell" goals are supposed to be used from the command line.
+
+This plugin has a "help" goal that will provide basic usage information.
+ * List of available goals: "mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:help"
+ * Parameters for a specific goal: "mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:help -Ddetail -Dgoal=<goal>"
+
+#### Run Accumulo server goal
+ * Run 'mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:standalone -DdefaultTables="table1,table2"'
  * A log message will be written to the console when Accumulo is initialized
+ * Two tables will be created (table1 and table2).  If this parameter is omitted then no tables are created.
  * Default Instance: accumulo
  * Default Zookeeper: localhost:2181
  * Default User: root
  * Default Password: password
  * When ready to shut down the Accumulo instance press CTRL-C
+
+#### Run Accumulo shell goal
+ * Run 'mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:shell'
+ * Default Instance: accumulo
+ * Default Zookeeper: localhost:2181
+ * Default User: root
+ * Default Password: password
