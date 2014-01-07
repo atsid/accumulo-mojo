@@ -26,7 +26,7 @@ To try accumulo-mojo out, execute the following maven commands :
 	[INFO] ------------------------------------------------------------------------
 </pre>
 
-Usage
+POM Usage
 =============
 
 ### Add dependency plugin
@@ -47,7 +47,7 @@ Usage
 			</plugin>
 ```
       
-### Use in IT
+### Use in integration tests
 
   
 ```java
@@ -81,7 +81,14 @@ Usage
 
 ```
 
-### Use from the command line
+### Custom iterator support in integration tests
+
+The "start-accumulo" goal supports custom iterators.  You just need to make sure your custom iterator is on the maven build classpath.  If the custom iterator is not part of the current project in the dependency chain then a plugin dependency should be added.  This is done by adding a &lt;dependencies&gt; tag to the plugin definition in your pom.xml.  See the plugin configuration format at http://maven.apache.org/ref/3.0.4/maven-model/maven.html#class_plugin
+
+
+Command Line Usage
+=============
+
 Most goals are designed to work within the integration test environment.  Only the "standalone" and "shell" goals are supposed to be used from the command line.
 
 This plugin has a "help" goal that will provide basic usage information.
