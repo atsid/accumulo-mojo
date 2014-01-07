@@ -86,7 +86,7 @@ Most goals are designed to work within the integration test environment.  Only t
 
 This plugin has a "help" goal that will provide basic usage information.
  * List of available goals: "mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:help"
- * Parameters for a specific goal: "mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:help -Ddetail -Dgoal=insertGoalName"
+ * Parameters for a specific goal: "mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:help -Ddetail -Dgoal=&lt;goalName&gt;"
 
 #### Run Accumulo server goal
  * Run 'mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:standalone -DdefaultTables="table1,table2"'
