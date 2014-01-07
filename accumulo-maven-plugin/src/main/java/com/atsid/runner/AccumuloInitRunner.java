@@ -17,17 +17,13 @@ import org.codehaus.plexus.util.FileUtils;
 
 public class AccumuloInitRunner extends BaseAccumuloRunner {
 
-	String instanceName = "accumulo";
+	private final String instanceName;
 
-	String password = "password";
+	private final String password;
 
-	private int dfsRPCPort = 9000;
+	private final int dfsRPCPort;
 
-	private int zooPort = 2181;
-
-	public AccumuloInitRunner(File baseDirectory, List<String> classPathEntries) {
-		super(baseDirectory, classPathEntries);
-	}
+	private final int zooPort;
 
 	@Override
 	protected Process initServer() throws Exception {
@@ -54,7 +50,7 @@ public class AccumuloInitRunner extends BaseAccumuloRunner {
 	public AccumuloInitRunner(File baseDirectory,
 			List<String> classpathEntries, String instanceName,
 			String password, int dfsRPCPort, int zooPort) {
-		this(baseDirectory, classpathEntries);
+		super(baseDirectory, classpathEntries);
 		this.instanceName = instanceName;
 		this.password = password;
 		this.dfsRPCPort = dfsRPCPort;
@@ -127,31 +123,15 @@ public class AccumuloInitRunner extends BaseAccumuloRunner {
 		return dfsRPCPort;
 	}
 
-	public void setDfsRPCPort(int dfsRPCPort) {
-		this.dfsRPCPort = dfsRPCPort;
-	}
-
 	public int getZooPort() {
 		return zooPort;
-	}
-
-	public void setZooPort(int zooPort) {
-		this.zooPort = zooPort;
 	}
 
 	public String getInstanceName() {
 		return instanceName;
 	}
 
-	public void setInstanceName(String instanceName) {
-		this.instanceName = instanceName;
-	}
-
 	public String getPassword() {
 		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 }
