@@ -23,8 +23,9 @@ public class MiniDFSServerRunnable implements
 
 	public void run() {
 		try {
-			miniCluster = new MiniDFSCluster(dfsRPCPort, new Configuration(),
-					1, true, true, StartupOption.FORMAT, null);
+			miniCluster = new MiniDFSCluster.Builder(new Configuration()).nameNodePort(dfsRPCPort).numDataNodes(1)
+					.format(true).manageDataDfsDirs(true).manageNameDfsDirs(true).manageNameDfsSharedDirs(true)
+					.startupOption(StartupOption.FORMAT).build();
 			miniCluster.waitClusterUp();
 		} catch (IOException e) {
 			throw new RuntimeException("Error setting up dfs", e);

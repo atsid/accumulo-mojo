@@ -31,9 +31,10 @@ public class HDFSTestServerMojo extends AbstractMojo {
 				try {
 					System.setProperty("test.build.data",
 							"target/accumuloPlugin/testData");
-					MiniDFSCluster miniCluster = new MiniDFSCluster(
-							nameNodePort, new Configuration(), 1, true, true,
-							StartupOption.FORMAT, null);
+					MiniDFSCluster miniCluster = new MiniDFSCluster.Builder(new Configuration())
+							.nameNodePort(nameNodePort).numDataNodes(1).format(true).manageDataDfsDirs(true)
+							.manageNameDfsDirs(true).manageNameDfsSharedDirs(true).startupOption(StartupOption.FORMAT)
+							.build();
 					miniCluster.waitClusterUp();
 				} catch (IOException e) {
 					throw new RuntimeException("Error setting up dfs", e);
