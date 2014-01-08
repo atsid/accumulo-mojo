@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.atsid.mojo</groupId>
 	<artifactId>accumulo-mojo</artifactId>
-	<version>0.4.0</version>
+	<version>0.4.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Accumulo Mojo Parent</name>
 	<modules>
@@ -12,7 +12,7 @@
 	</modules>
 	<scm>
 		<connection>scm:git:git@github.com:atsid/accumulo-mojo.git</connection>
-		<tag>accumulo-mojo-0.4.0</tag>
+		<tag>HEAD</tag>
 		<url>scm:git:git@github.com:atsid/accumulo-mojo.git</url>
 	</scm>
 	<properties>
