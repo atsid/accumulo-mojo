@@ -26,6 +26,17 @@ To try accumulo-mojo out, execute the following maven commands :
 	[INFO] ------------------------------------------------------------------------
 </pre>
 
+Temporary directories will be created in the default temp location at runtime.  These will be removed when the mojo shuts down.
+
+Before running this plugin make sure that there are not any instances of Hadoop, Zookeeper, or Accumulo running locally.  Mojo behavior is not defined when servers already exist.
+
+### System Requirements
+
+ * Linux OS
+ * Maven (Tested with Maven3 only)
+
+You do not need to install or configure Hadoop, Zookeeper, or Accumulo in order to use this plugin.  These dependencies will be downloaded automatically by Maven at runtime.
+
 POM Usage
 =============
 
@@ -90,6 +101,8 @@ Command Line Usage
 =============
 
 Most goals are designed to work within the integration test environment.  Only the "standalone" and "shell" goals are supposed to be used from the command line.
+
+Please note that this plugin is not available on most public maven repositories.  If you plan to use this plugin without a project pom then you must make sure that maven can find the plugin.
 
 This plugin has a "help" goal that will provide basic usage information.
  * List of available goals: "mvn com.atsid.mojo:accumulo-maven-plugin:0.4.0:help"
