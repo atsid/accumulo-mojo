@@ -299,7 +299,7 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
             getLog().info(
                     "Scheduling directory for deletion: "
                             + this.hdfsTemporaryDirectory.getAbsolutePath());
-            FileUtils.forceDeleteOnExit(hdfsTemporaryDirectory);
+            FileUtils.forceDelete(hdfsTemporaryDirectory);
 		} catch (IOException e) {
 			throw new MojoExecutionException(
 					"Error deleting Accumulo temporary directory", e);
