@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.atsid.mojo</groupId>
 	<artifactId>accumulo-mojo</artifactId>
-	<version>0.4.1-SNAPSHOT</version>
+	<version>0.4.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Accumulo Mojo Parent</name>
 	<modules>
