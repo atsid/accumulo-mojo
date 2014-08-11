@@ -71,6 +71,8 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 
 	private File accumuloTemporaryDirectory;
 
+    private File hdfsTemporaryDirectory;
+
 	public abstract void execute() throws MojoExecutionException,
 			MojoFailureException;
 
@@ -91,6 +93,11 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 			accumuloTemporaryDirectory = File.createTempFile("accumulo", "");
 			accumuloTemporaryDirectory.delete();
 			accumuloTemporaryDirectory.mkdir();
+
+            hdfsTemporaryDirectory = File.createTempFile("hdfs", "");
+            hdfsTemporaryDirectory.delete();
+            hdfsTemporaryDirectory.mkdir();
+
 			startDFS();
 			startZookeeper();
 			initializeAccumulo(accumuloTemporaryDirectory);
@@ -141,7 +148,7 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 	}
 
 	protected void startDFS() throws Exception {
-		dfsService = new MiniDFSServerRunnable(dfsRPCPort);
+		dfsService = new MiniDFSServerRunnable(dfsRPCPort, hdfsTemporaryDirectory);
 		Thread dfsCluster = new Thread(dfsService);
 		dfsCluster.setName("HDFS " + System.currentTimeMillis());
 		dfsCluster.setDaemon(true);
@@ -285,10 +292,14 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 			// non-empty directory. We have to wait until after the scheduled
 			// shutdown to invoke it because it traverses the directory tree and
 			// schedules each file for deletion individually.
-			getLog().info(
-					"Scheduling directory for deletion: "
-							+ this.accumuloTemporaryDirectory.getAbsolutePath());
-			FileUtils.forceDeleteOnExit(accumuloTemporaryDirectory);
+            getLog().info(
+                    "Scheduling directory for deletion: "
+                            + this.accumuloTemporaryDirectory.getAbsolutePath());
+            FileUtils.forceDeleteOnExit(accumuloTemporaryDirectory);
+            getLog().info(
+                    "Scheduling directory for deletion: "
+                            + this.hdfsTemporaryDirectory.getAbsolutePath());
+            FileUtils.forceDeleteOnExit(hdfsTemporaryDirectory);
 		} catch (IOException e) {
 			throw new MojoExecutionException(
 					"Error deleting Accumulo temporary directory", e);

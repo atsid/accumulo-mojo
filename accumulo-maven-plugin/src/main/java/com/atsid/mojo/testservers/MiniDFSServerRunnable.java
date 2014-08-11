@@ -1,5 +1,6 @@
 package com.atsid.mojo.testservers;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
@@ -11,10 +12,12 @@ public class MiniDFSServerRunnable implements
 
 	private int dfsRPCPort;
 	private MiniDFSCluster miniCluster;
+    private final File tempDirectory;
 
-	public MiniDFSServerRunnable(int dfsRPCPort) {
+	public MiniDFSServerRunnable(int dfsRPCPort, File tempDirectory) {
 		super();
 		this.dfsRPCPort = dfsRPCPort;
+        this.tempDirectory = tempDirectory;
 	}
 
 	public MiniDFSCluster getTestRunner() {
@@ -23,7 +26,9 @@ public class MiniDFSServerRunnable implements
 
 	public void run() {
 		try {
-			miniCluster = new MiniDFSCluster.Builder(new Configuration()).nameNodePort(dfsRPCPort).numDataNodes(1)
+            Configuration configuration = new Configuration();
+            configuration.set(MiniDFSCluster.HDFS_MINIDFS_BASEDIR, tempDirectory.getAbsolutePath());
+			miniCluster = new MiniDFSCluster.Builder(configuration).nameNodePort(dfsRPCPort).numDataNodes(1)
 					.format(true).manageDataDfsDirs(true).manageNameDfsDirs(true).manageNameDfsSharedDirs(true)
 					.startupOption(StartupOption.FORMAT).build();
 			miniCluster.waitClusterUp();
