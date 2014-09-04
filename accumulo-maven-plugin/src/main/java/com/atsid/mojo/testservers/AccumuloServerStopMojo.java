@@ -20,20 +20,43 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 public class AccumuloServerStopMojo extends AbstractMojo {
 
+    /**
+     * If true then the output of the zookeeper server will be dropped. If false
+     * then the output of the zookeeper server will be written to the console.
+     * Default is false.
+     *
+     * @parameter property="skipTests" default-value="false"
+     */
+    private boolean skipTests;
+
+    /**
+     * Set this to "true" to skip running integration tests, but still compile them. Its use is NOT RECOMMENDED, but
+     * quite convenient on occasion.
+     *
+     * @parameter property="skipITs" default-value="false"
+     */
+    private boolean skipITs;
+
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
-		String className = AccumuloServerStartMojo.class.getSimpleName();
 
-		ObjectName objectName;
-		try {
-			objectName = ObjectName.getInstance(String.format("%s:type=%s",
-					AccumuloServerStartMojo.class.getPackage().getName(),
-					className));
-			server.invoke(objectName, "shutdown", null, null);
-		} catch (Exception e) {
-			throw new MojoExecutionException(
-					"Error shutting down accumulo mojo", e);
-		}
+        if(!this.isSkip()) {
+            MBeanServer server = ManagementFactory.getPlatformMBeanServer();
+            String className = AccumuloServerStartMojo.class.getSimpleName();
 
+            ObjectName objectName;
+            try {
+                objectName = ObjectName.getInstance(String.format("%s:type=%s",
+                        AccumuloServerStartMojo.class.getPackage().getName(),
+                        className));
+                server.invoke(objectName, "shutdown", null, null);
+            } catch (Exception e) {
+                throw new MojoExecutionException(
+                        "Error shutting down accumulo mojo", e);
+            }
+        }
 	}
+
+    private boolean isSkip() {
+        return this.skipTests || this.skipITs;
+    }
 }

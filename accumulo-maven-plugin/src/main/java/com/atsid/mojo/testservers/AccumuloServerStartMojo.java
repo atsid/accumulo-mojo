@@ -49,6 +49,23 @@ public class AccumuloServerStartMojo extends BaseAccumuloServerMojo implements
 	private boolean zookeeperQuiet;
 
     /**
+     * If true then the output of the zookeeper server will be dropped. If false
+     * then the output of the zookeeper server will be written to the console.
+     * Default is false.
+     *
+     * @parameter property="skipTests" default-value="false"
+     */
+    private boolean skipTests;
+
+    /**
+     * Set this to "true" to skip running integration tests, but still compile them. Its use is NOT RECOMMENDED, but
+     * quite convenient on occasion.
+     *
+     * @parameter property="skipITs" default-value="false"
+     */
+    private boolean skipITs;
+
+    /**
      * List of tables to create after Accumulo has been initialized. Default is an empty
      * list.
      *
@@ -69,11 +86,19 @@ public class AccumuloServerStartMojo extends BaseAccumuloServerMojo implements
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		this.executeInternal();
+        if(!this.isSkip()) {
+            this.executeInternal();
 
-        getLog().info("*********************************************");
-        getLog().info("Accumulo started");
-        getLog().info("*********************************************");
+            getLog().info("*********************************************");
+            getLog().info("Accumulo started");
+            getLog().info("*********************************************");
+        } else {
+            getLog().info( "Tests are skipped.  Not starting Accumulo." );
+        }
+    }
+
+    private boolean isSkip() {
+        return this.skipTests || this.skipITs;
     }
 
 	@Override
