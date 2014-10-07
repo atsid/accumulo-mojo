@@ -1,6 +1,5 @@
 package com.atsid.runner;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.management.ManagementFactory;
@@ -89,22 +88,16 @@ public abstract class AbstractServerTestRunner implements
 		public void run() {
 			byte[] readBuffer = new byte[256];
 			try {
-                while (true) {
-                    int length = inputStream.read(readBuffer);
-                    if (length == -1) {
-                        break;
-                    }
-                    if (outputStream != null) {
-                        outputStream.write(readBuffer, 0, length);
-                        outputStream.flush();
-                    }
-                }
-            } catch (IOException e) {
-                if(!e.getMessage().startsWith("Stream closed")) {
-                    // If the input stream or output stream is not closed then re-throw the exception.
-                    // If the stream is closed then the process has ended and we should swallow the exception.
-                    throw new RuntimeException(e);
-                }
+				while (true) {
+					int length = inputStream.read(readBuffer);
+					if (length == -1) {
+						break;
+					}
+					if (outputStream != null) {
+						outputStream.write(readBuffer, 0, length);
+						outputStream.flush();
+					}
+				}
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
