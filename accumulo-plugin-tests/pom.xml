@@ -34,8 +34,10 @@
 				<artifactId>accumulo-maven-plugin</artifactId>
 				<version>${project.version}</version>
 				<configuration>
-					<zookeeperQuiet>true</zookeeperQuiet>
-					<accumuloQuiet>true</accumuloQuiet>
+					<!-- Do not use quiet mode.  This ensures that the output streams are handled correctly
+					 instead of using the NullOutputStream-->
+					<zookeeperQuiet>false</zookeeperQuiet>
+					<accumuloQuiet>false</accumuloQuiet>
 					<defaultTables>
 						<param>tableOne</param>
 						<param>tableTwo</param>
