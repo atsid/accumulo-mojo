@@ -250,7 +250,7 @@ public abstract class BaseAccumuloServerMojo extends AbstractTestServerMojo
 			try {
 				shutdownCloudbaseTestRunner(runner);
 			} catch (Exception e) {
-				getLog().warn(
+				getLog().error(
 						String.format(
 								"Error during shutdown of service %s\nException is: %s",
 								runner.getClass().getName(), e.toString()));
