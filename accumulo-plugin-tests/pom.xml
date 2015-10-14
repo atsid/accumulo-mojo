@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.atsid.mojo</groupId>
 		<artifactId>accumulo-mojo</artifactId>
-		<version>0.4.6-SNAPSHOT</version>
+		<version>0.4.6</version>
 	</parent>
 	<artifactId>accumulo-plugin-tests</artifactId>
 	<name>Accumulo Plugin Integration Tests</name>
