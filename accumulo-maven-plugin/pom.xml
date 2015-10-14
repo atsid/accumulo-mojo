@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.atsid.mojo</groupId>
 		<artifactId>accumulo-mojo</artifactId>
-		<version>0.4.6</version>
+		<version>0.4.7-SNAPSHOT</version>
 	</parent>
 	<artifactId>accumulo-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
