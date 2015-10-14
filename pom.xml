@@ -16,7 +16,7 @@
 		<url>scm:git:git@github.com:atsid/accumulo-mojo.git</url>
 	</scm>
 	<properties>
-		<accumulo.version>1.5.0</accumulo.version>
+		<accumulo.version>1.5.4</accumulo.version>
 		<hadoop.version>2.0.0-cdh4.5.0</hadoop.version>
 		<hadoop.mr.version>2.0.0-mr1-cdh4.5.0</hadoop.mr.version>
 		<zookeeper.version>3.4.5-cdh4.5.0</zookeeper.version>
