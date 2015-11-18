@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/atsid/accumulo-mojo
 .svg?branch=master)](https://travis-ci.org/atsid/accumulo-mojo
 )
-[![Code Climate](https://codeclimate.com/github/atsid/accumulo-mojo/badges/gpa.svg)](https://codeclimate.com/github/atsid/accumulo-mojo)
-[![Test Coverage](https://codeclimate.com/github/atsid/accumulo-mojo/badges/coverage.svg)](https://codeclimate.com/github/atsid/accumulo-mojo/coverage)
 accumulo-mojo
 =============
 
