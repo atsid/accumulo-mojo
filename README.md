@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/atsid/accumulo-mojo
+.svg?branch=master)](https://travis-ci.org/atsid/accumulo-mojo
+)
 accumulo-mojo
 =============
 
